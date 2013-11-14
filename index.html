@@ -1,30 +1,33 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>Message Encoder</h1>
-    <p>This simple page lets you securely encrypt a message with a password. Your message will not leave your computer, and will not be sent over the Internet.</p>
-    <p>Once it's encoded, you'll be able to share your message with anyone else who has the password.</p>
-    <textarea id="message" rows="6" cols="60"></textarea>
-    <br>
-    <button id="encrypt">Lock Down</button>
+    <title>Encrypted Message</title>
 
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
-
-    <script>
+    <script type="text/javascript">
       var encoder = {
         setMessage: function() {
-
+          this.message = document.getElementById('message').value
+          //alert(this.message)
+          console.log(this.message)
         },
         getPassword: function() {
-
+          this.password = prompt("What passphrase will protect this message?")
+          if (this.password != null){
+            alert("Thank you! " + this.password);
+          }
+          else {
+            alert("You did not specify your password. Please try again.");
+          }
         },
         setUrl: function() {
-
+          this.url = this.encrypt()
+          console.log(this.url)
+          //this.url = document.URL + "decode.html?" + this.encrypt()
         },
         replaceMessageWithUrl: function () {
+          //window.location.href = document.URL.replace("index.html", "decode.html") + "?" + this.url
+          document.getElementById("message").value = "Your encrypted message is available to anyone with the password you entered at: \n\n" + document.URL.replace("index.html", "decode.html") + "?" + this.url
+          console.log(window.location.href)
 
         },
         encrypt: function() {
@@ -41,5 +44,18 @@
         }
       }
     </script>
+
+  </head>
+  <body>
+    <h1>Message Encoder</h1>
+    <p>This simple page lets you securely encrypt a message with a password. Your message will not leave your computer, and will not be sent over the Internet.</p>
+    <p>Once it's encoded, you'll be able to share your message with anyone else who has the password.</p>
+    <textarea id="message" rows="6" cols="60"></textarea>
+    <br>
+    <button id="encrypt" onClick="encoder.protect()">Lock Down</button>
+
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
   </body>
 </html>
+
+
